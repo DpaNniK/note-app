@@ -20,7 +20,7 @@
 
 ### Доступ к swagger:
 
-- http://localhost:8080/swagger-ui/index.html#/
+- http://localhost:8080/swagger-ui/index.html#/ (/NoteAPI)
 
 ---
 Т.к. регистрация пользователя осуществляется при помощи администратора,
