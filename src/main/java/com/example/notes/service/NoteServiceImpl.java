@@ -81,9 +81,11 @@ public class NoteServiceImpl implements NoteService {
         if (!note.getCreator().equals(creator)) {
             log.info("Невозможно удалить заметку. " +
                     "Пользователь {} не является создателем заметки {}", creator, note);
+            throw new RequestError(HttpStatus.CONFLICT, "Пользователь " + creator +
+                    " не является создателем заметки " + note);
         }
         historyNoteService.deleteHistory(noteId);
-        noteRepository.delete(note);
+        noteRepository.deleteNotById(noteId);
         log.info("Заметка {} удалена", note);
     }
 

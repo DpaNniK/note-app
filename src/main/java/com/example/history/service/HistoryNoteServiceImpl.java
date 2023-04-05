@@ -29,7 +29,7 @@ public class HistoryNoteServiceImpl implements HistoryNoteService {
 
     @Override
     public void deleteHistory(Integer noteId) {
-        historyNoteRepository.deleteAllByNoteId(noteId);
+        historyNoteRepository.deleteHistoryByNoteId(noteId);
         log.info("Очищена история заметки под id = {}", noteId);
     }
 

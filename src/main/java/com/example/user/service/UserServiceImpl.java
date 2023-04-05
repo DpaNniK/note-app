@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         }
         if (userUpdateDto.getSurname() != null) {
             log.info("Пользователь {} изменил фамилию на {}", oldUser, userUpdateDto.getSurname());
-            oldUser.setName(userUpdateDto.getSurname());
+            oldUser.setSurname(userUpdateDto.getSurname());
         }
         if (userUpdateDto.getEmail() != null) {
             if (userRepository.findUserByEmail(userUpdateDto.getEmail()) != null) {
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
                         "Невозможно изменить почту. Почта" + userUpdateDto.getEmail() + " уже занята");
             }
             log.info("Пользователь {} изменил почту на {}", oldUser, userUpdateDto.getEmail());
-            oldUser.setName(userUpdateDto.getEmail());
+            oldUser.setEmail(userUpdateDto.getEmail());
         }
         if (userUpdateDto.getPassword() != null) {
             log.info("Пользователь {} изменил пароль на {}", oldUser, userUpdateDto.getPassword());
