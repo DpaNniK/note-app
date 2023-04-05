@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @UtilityClass
 public class UserMapper {
 
-    //Кодер используются для шифровки пароля,
+    //Кодер используется для шифровки пароля,
     //т.о. хранение пароля в бд становится более безопасным
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
