@@ -18,7 +18,10 @@ public interface NoteService {
 
     void deleteNoteById(String email, Integer noteId);
 
+    void deleteAllNotesUser(Integer userId);
+
     Collection<HistoryNoteDto> getHistoryForNote(String email, Integer noteId);
 
     Collection<ResultNoteDto> getAllNotesForUser(String email);
+
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -19,4 +20,9 @@ public interface HistoryNoteRepository extends JpaRepository<HistoryNote, Intege
     void deleteHistoryByNoteId(@Param("noteId") Integer noteId);
 
     List<HistoryNote> getHistoryNotesByNoteIdOrderByUpdatedDesc(Integer noteId);
+
+    @Modifying
+    @Transactional
+    @Query("delete from HistoryNote h where h.noteId in :noteIds")
+    void deleteAllNotesByNoteIds(@Param("noteIds") Collection<Integer> noteIds);
 }

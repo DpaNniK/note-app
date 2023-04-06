@@ -34,6 +34,12 @@ public class HistoryNoteServiceImpl implements HistoryNoteService {
     }
 
     @Override
+    public void deleteHistoryByNoteIds(Collection<Integer> ids) {
+        historyNoteRepository.deleteAllNotesByNoteIds(ids);
+        log.info("Очищена история заметок из списка - {}", ids);
+    }
+
+    @Override
     public Collection<HistoryNoteDto> getHistoryForNote(Integer noteId) {
         List<HistoryNoteDto> historyNotesDto = new ArrayList<>();
         List<HistoryNote> historyNotes = historyNoteRepository

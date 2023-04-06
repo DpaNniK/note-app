@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Schema(description = "DTO для результата создания заметки")
 public class ResultNoteDto {
+    @Schema(description = "ID заметки")
+    private Integer id;
     @Schema(description = "Создатель заметки")
     private UserResultDto creator;
     @Schema(description = "Заголовок заметки", example = "head")

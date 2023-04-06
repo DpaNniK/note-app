@@ -1,5 +1,6 @@
 package com.example.user.controllers;
 
+import com.example.notes.service.NoteService;
 import com.example.user.dto.UserDto;
 import com.example.user.dto.UserResultDto;
 import com.example.user.dto.UserAdminUpdateDto;
@@ -22,7 +23,8 @@ import javax.validation.Valid;
 @SecurityRequirement(name = "NoteAPISecureScheme")
 public class AdminController {
 
-    private UserService userService;
+    private final UserService userService;
+    private final NoteService noteService;
 
     //Возвращаю сущность UserResultDto для наглядности работы при использовании swagger
     @PostMapping("/create_user")
@@ -49,12 +51,14 @@ public class AdminController {
         return userService.changeUser(userId, userUpdateDto);
     }
 
+    //При удалении пользователя удаляются также его заметки (вместе с историей)
     @DeleteMapping("/{userId}")
     @Operation(
             summary = "Удаление пользователя",
             description = "Позволяет администратору удалить существующего пользователя"
     )
     public void deleteUser(@PathVariable Integer userId) {
+        noteService.deleteAllNotesUser(userId);
         userService.deleteUser(userId);
     }
 }

@@ -47,6 +47,8 @@ public class NoteServiceImpl implements NoteService {
         if (!note.getCreator().equals(creator)) {
             log.info("Невозможно изменить заметку. " +
                     "Пользователь {} не является создателем заметки {}", creator, note);
+            throw new RequestError(HttpStatus.CONFLICT, "Пользователь " + creator +
+                    " не является создателем заметки " + note);
         }
         historyNoteService.saveHistory(note);
         if (updateNoteDto.getHeader() != null) {
@@ -87,6 +89,15 @@ public class NoteServiceImpl implements NoteService {
         historyNoteService.deleteHistory(noteId);
         noteRepository.deleteNotById(noteId);
         log.info("Заметка {} удалена", note);
+    }
+
+    @Override
+    public void deleteAllNotesUser(Integer userId) {
+        User creator = userService.getUserById(userId);
+        List<Integer> noteIds = noteRepository.getAllIds(creator.getEmail());
+        historyNoteService.deleteHistoryByNoteIds(noteIds);
+        noteRepository.deleteAllNoteByCreator(creator);
+        log.info("Заметки пользователя {} удалены", creator);
     }
 
     @Override

@@ -16,8 +16,16 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
 
     List<Note> getAllByCreator(User creator);
 
+    @Query("select n.id from Note n where n.creator.email = :email")
+    List<Integer> getAllIds(@Param("email") String email);
+
     @Modifying
     @Transactional
     @Query("delete from Note n where n.id = :id")
     void deleteNotById(@Param("id") Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("delete from Note n where n.creator = :creator")
+    void deleteAllNoteByCreator(@Param("creator") User creator);
 }

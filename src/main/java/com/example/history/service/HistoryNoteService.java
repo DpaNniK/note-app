@@ -11,5 +11,7 @@ public interface HistoryNoteService {
 
     void deleteHistory(Integer noteId);
 
+    void deleteHistoryByNoteIds(Collection<Integer> ids);
+
     Collection<HistoryNoteDto> getHistoryForNote(Integer noteId);
 }

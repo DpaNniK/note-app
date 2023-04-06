@@ -1,9 +1,9 @@
 package com.example.user.service;
 
 import com.example.error.RequestError;
+import com.example.user.dto.UserAdminUpdateDto;
 import com.example.user.dto.UserDto;
 import com.example.user.dto.UserResultDto;
-import com.example.user.dto.UserAdminUpdateDto;
 import com.example.user.dto.UserUpdateDto;
 import com.example.user.mapper.UserMapper;
 import com.example.user.models.Role;
@@ -53,6 +53,10 @@ public class UserServiceImpl implements UserService {
             user.setSurname(userUpdateDto.getSurname());
         }
         if (userUpdateDto.getEmail() != null) {
+            if (userRepository.findUserByEmail(userUpdateDto.getEmail()) != null) {
+                throw new RequestError(HttpStatus.CONFLICT,
+                        "Невозможно изменить почту. Почта" + userUpdateDto.getEmail() + " уже занята");
+            }
             log.info("Email пользователя {} изменен на {} администратором",
                     user, userUpdateDto.getEmail());
             user.setEmail(userUpdateDto.getEmail());
@@ -65,7 +69,7 @@ public class UserServiceImpl implements UserService {
         if (userUpdateDto.getPassword() != null) {
             log.info("Пароль пользователя {} изменен на {} администратором",
                     user, userUpdateDto.getPassword());
-            user.setPassword(userUpdateDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userUpdateDto.getPassword()));
         }
         User resultUser = userRepository.save(user);
         log.info("Данные пользователя {} обновлены", resultUser);
@@ -110,7 +114,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findUserByEmail(email);
         if (user == null) {
             log.warn("Пользователь с почтой {} не найден", email);
-            throw new RequestError(HttpStatus.CONFLICT,
+            throw new RequestError(HttpStatus.NOT_FOUND,
                     "Пользователь с почтой " + email + " не найден");
         }
         return user;
@@ -123,7 +127,8 @@ public class UserServiceImpl implements UserService {
         log.info("Пользователь {} удален", user);
     }
 
-    private User getUserById(Integer userId) {
+    @Override
+    public User getUserById(Integer userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             log.info("Пользователь с id = {} не найден", userId);

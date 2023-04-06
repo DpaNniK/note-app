@@ -24,6 +24,7 @@ public class NoteMapper {
 
     public static ResultNoteDto toResultNoteDto(Note note) {
         ResultNoteDto resultNoteDto = new ResultNoteDto();
+        resultNoteDto.setId(note.getId());
         resultNoteDto.setHeader(note.getHeader());
         resultNoteDto.setDescription(note.getDescription());
         resultNoteDto.setCreator(UserMapper.toUserResultDto(note.getCreator()));
