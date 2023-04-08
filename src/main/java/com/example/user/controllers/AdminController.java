@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/admins")
+@RequestMapping("/admins/user")
 @PreAuthorize("hasAuthority('access:admin')")
 @Tag(name = "Администратор", description = "Эндпоинты для работы с пользователями")
 @SecurityRequirement(name = "NoteAPISecureScheme")
@@ -27,7 +27,7 @@ public class AdminController {
     private final NoteService noteService;
 
     //Возвращаю сущность UserResultDto для наглядности работы при использовании swagger
-    @PostMapping("/create_user")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Создание пользователя",
