@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/admins/user")
+@RequestMapping("/admins/users")
 @PreAuthorize("hasAuthority('access:admin')")
 @Tag(name = "Администратор", description = "Эндпоинты для работы с пользователями")
 @SecurityRequirement(name = "NoteAPISecureScheme")
